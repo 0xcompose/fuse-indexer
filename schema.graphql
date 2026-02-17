@@ -1,0 +1,143 @@
+type Pool {
+	id: ID!
+	token0: String!
+	token1: String!
+	address: String!
+	factory: String!
+}
+
+type AlgebraIntegral_CustomPool {
+	id: ID!
+	deployer: String!
+	token0: String!
+	token1: String!
+	pool: String!
+}
+
+type AlgebraIntegral_DefaultCommunityFee {
+	id: ID!
+	newDefaultCommunityFee: BigInt!
+}
+
+type AlgebraIntegral_DefaultFee {
+	id: ID!
+	newDefaultFee: BigInt!
+}
+
+type AlgebraIntegral_DefaultPluginFactory {
+	id: ID!
+	defaultPluginFactoryAddress: String!
+}
+
+type AlgebraIntegral_DefaultTickspacing {
+	id: ID!
+	newDefaultTickspacing: BigInt!
+}
+
+type AlgebraIntegral_OwnershipTransferStarted {
+	id: ID!
+	previousOwner: String!
+	newOwner: String!
+}
+
+type AlgebraIntegral_OwnershipTransferred {
+	id: ID!
+	previousOwner: String!
+	newOwner: String!
+}
+
+type AlgebraIntegral_Pool {
+	id: ID!
+	token0: String!
+	token1: String!
+	pool: String!
+}
+
+type AlgebraIntegral_RenounceOwnershipFinish {
+	id: ID!
+	timestamp: BigInt!
+}
+
+type AlgebraIntegral_RenounceOwnershipStart {
+	id: ID!
+	timestamp: BigInt!
+	finishTimestamp: BigInt!
+}
+
+type AlgebraIntegral_RenounceOwnershipStop {
+	id: ID!
+	timestamp: BigInt!
+}
+
+type AlgebraIntegral_RoleAdminChanged {
+	id: ID!
+	role: String!
+	previousAdminRole: String!
+	newAdminRole: String!
+}
+
+type AlgebraIntegral_RoleGranted {
+	id: ID!
+	role: String!
+	account: String!
+	sender: String!
+}
+
+type AlgebraIntegral_RoleRevoked {
+	id: ID!
+	role: String!
+	account: String!
+	sender: String!
+}
+
+type AlgebraIntegral_VaultFactory {
+	id: ID!
+	newVaultFactory: String!
+}
+
+type UniswapV2Factory_PairCreated {
+	id: ID!
+	token0: String!
+	token1: String!
+	pair: String!
+	_3: BigInt!
+}
+
+type VoltageV3Factory_FeeAmountEnabled {
+	id: ID!
+	fee: BigInt!
+	tickSpacing: BigInt!
+}
+
+type VoltageV3Factory_FeeAmountExtraInfoUpdated {
+	id: ID!
+	fee: BigInt!
+	whitelistRequested: Boolean!
+	enabled: Boolean!
+}
+
+type VoltageV3Factory_OwnerChanged {
+	id: ID!
+	oldOwner: String!
+	newOwner: String!
+}
+
+type VoltageV3Factory_PoolCreated {
+	id: ID!
+	token0: String!
+	token1: String!
+	fee: BigInt!
+	tickSpacing: BigInt!
+	pool: String!
+}
+
+type VoltageV3Factory_SetLmPoolDeployer {
+	id: ID!
+	lmPoolDeployer: String!
+}
+
+type VoltageV3Factory_WhiteListAdded {
+	id: ID!
+	user: String!
+	verified: Boolean!
+}
