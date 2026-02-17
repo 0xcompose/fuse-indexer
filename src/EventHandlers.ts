@@ -4,31 +4,21 @@
 import {
 	AlgebraIntegral,
 	AlgebraIntegral_CustomPool,
-	AlgebraIntegral_DefaultCommunityFee,
-	AlgebraIntegral_DefaultFee,
-	AlgebraIntegral_DefaultPluginFactory,
-	AlgebraIntegral_DefaultTickspacing,
-	AlgebraIntegral_OwnershipTransferStarted,
-	AlgebraIntegral_OwnershipTransferred,
 	AlgebraIntegral_Pool,
-	AlgebraIntegral_RenounceOwnershipFinish,
-	AlgebraIntegral_RenounceOwnershipStart,
-	AlgebraIntegral_RenounceOwnershipStop,
-	AlgebraIntegral_RoleAdminChanged,
-	AlgebraIntegral_RoleGranted,
-	AlgebraIntegral_RoleRevoked,
-	AlgebraIntegral_VaultFactory,
 	UniswapV2Factory,
 	UniswapV2Factory_PairCreated,
-	VoltageV3Factory,
-	VoltageV3Factory_FeeAmountEnabled,
-	VoltageV3Factory_FeeAmountExtraInfoUpdated,
-	VoltageV3Factory_OwnerChanged,
-	VoltageV3Factory_PoolCreated,
-	VoltageV3Factory_SetLmPoolDeployer,
-	VoltageV3Factory_WhiteListAdded,
+	UniswapV3Factory,
+	UniswapV3Factory_PoolCreated,
 	Pool,
+	UniV4PoolManager_Initialize,
+	PoolManager,
+	CLPoolManager_Initialize,
+	CLPoolManager,
 } from "generated"
+
+const handlerConfig = {
+	wildcard: true,
+}
 
 AlgebraIntegral.CustomPool.handler(async ({ event, context }) => {
 	const entity: AlgebraIntegral_CustomPool = {
@@ -50,63 +40,7 @@ AlgebraIntegral.CustomPool.handler(async ({ event, context }) => {
 	context.Pool.set(pool)
 
 	context.AlgebraIntegral_CustomPool.set(entity)
-})
-
-AlgebraIntegral.DefaultCommunityFee.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_DefaultCommunityFee = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		newDefaultCommunityFee: event.params.newDefaultCommunityFee,
-	}
-
-	context.AlgebraIntegral_DefaultCommunityFee.set(entity)
-})
-
-AlgebraIntegral.DefaultFee.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_DefaultFee = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		newDefaultFee: event.params.newDefaultFee,
-	}
-
-	context.AlgebraIntegral_DefaultFee.set(entity)
-})
-
-AlgebraIntegral.DefaultPluginFactory.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_DefaultPluginFactory = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		defaultPluginFactoryAddress: event.params.defaultPluginFactoryAddress,
-	}
-
-	context.AlgebraIntegral_DefaultPluginFactory.set(entity)
-})
-
-AlgebraIntegral.DefaultTickspacing.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_DefaultTickspacing = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		newDefaultTickspacing: event.params.newDefaultTickspacing,
-	}
-
-	context.AlgebraIntegral_DefaultTickspacing.set(entity)
-})
-
-AlgebraIntegral.OwnershipTransferStarted.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_OwnershipTransferStarted = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		previousOwner: event.params.previousOwner,
-		newOwner: event.params.newOwner,
-	}
-
-	context.AlgebraIntegral_OwnershipTransferStarted.set(entity)
-})
-
-AlgebraIntegral.OwnershipTransferred.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_OwnershipTransferred = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		previousOwner: event.params.previousOwner,
-		newOwner: event.params.newOwner,
-	}
-
-	context.AlgebraIntegral_OwnershipTransferred.set(entity)
-})
+}, handlerConfig)
 
 AlgebraIntegral.Pool.handler(async ({ event, context }) => {
 	const entity: AlgebraIntegral_Pool = {
@@ -127,77 +61,7 @@ AlgebraIntegral.Pool.handler(async ({ event, context }) => {
 	context.Pool.set(pool)
 
 	context.AlgebraIntegral_Pool.set(entity)
-})
-
-AlgebraIntegral.RenounceOwnershipFinish.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_RenounceOwnershipFinish = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		timestamp: event.params.timestamp,
-	}
-
-	context.AlgebraIntegral_RenounceOwnershipFinish.set(entity)
-})
-
-AlgebraIntegral.RenounceOwnershipStart.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_RenounceOwnershipStart = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		timestamp: event.params.timestamp,
-		finishTimestamp: event.params.finishTimestamp,
-	}
-
-	context.AlgebraIntegral_RenounceOwnershipStart.set(entity)
-})
-
-AlgebraIntegral.RenounceOwnershipStop.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_RenounceOwnershipStop = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		timestamp: event.params.timestamp,
-	}
-
-	context.AlgebraIntegral_RenounceOwnershipStop.set(entity)
-})
-
-AlgebraIntegral.RoleAdminChanged.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_RoleAdminChanged = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		role: event.params.role,
-		previousAdminRole: event.params.previousAdminRole,
-		newAdminRole: event.params.newAdminRole,
-	}
-
-	context.AlgebraIntegral_RoleAdminChanged.set(entity)
-})
-
-AlgebraIntegral.RoleGranted.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_RoleGranted = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		role: event.params.role,
-		account: event.params.account,
-		sender: event.params.sender,
-	}
-
-	context.AlgebraIntegral_RoleGranted.set(entity)
-})
-
-AlgebraIntegral.RoleRevoked.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_RoleRevoked = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		role: event.params.role,
-		account: event.params.account,
-		sender: event.params.sender,
-	}
-
-	context.AlgebraIntegral_RoleRevoked.set(entity)
-})
-
-AlgebraIntegral.VaultFactory.handler(async ({ event, context }) => {
-	const entity: AlgebraIntegral_VaultFactory = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		newVaultFactory: event.params.newVaultFactory,
-	}
-
-	context.AlgebraIntegral_VaultFactory.set(entity)
-})
+}, handlerConfig)
 
 UniswapV2Factory.PairCreated.handler(async ({ event, context }) => {
 	const entity: UniswapV2Factory_PairCreated = {
@@ -219,43 +83,10 @@ UniswapV2Factory.PairCreated.handler(async ({ event, context }) => {
 	context.Pool.set(pool)
 
 	context.UniswapV2Factory_PairCreated.set(entity)
-})
+}, handlerConfig)
 
-VoltageV3Factory.FeeAmountEnabled.handler(async ({ event, context }) => {
-	const entity: VoltageV3Factory_FeeAmountEnabled = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		fee: event.params.fee,
-		tickSpacing: event.params.tickSpacing,
-	}
-
-	context.VoltageV3Factory_FeeAmountEnabled.set(entity)
-})
-
-VoltageV3Factory.FeeAmountExtraInfoUpdated.handler(
-	async ({ event, context }) => {
-		const entity: VoltageV3Factory_FeeAmountExtraInfoUpdated = {
-			id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-			fee: event.params.fee,
-			whitelistRequested: event.params.whitelistRequested,
-			enabled: event.params.enabled,
-		}
-
-		context.VoltageV3Factory_FeeAmountExtraInfoUpdated.set(entity)
-	},
-)
-
-VoltageV3Factory.OwnerChanged.handler(async ({ event, context }) => {
-	const entity: VoltageV3Factory_OwnerChanged = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		oldOwner: event.params.oldOwner,
-		newOwner: event.params.newOwner,
-	}
-
-	context.VoltageV3Factory_OwnerChanged.set(entity)
-})
-
-VoltageV3Factory.PoolCreated.handler(async ({ event, context }) => {
-	const entity: VoltageV3Factory_PoolCreated = {
+UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
+	const entity: UniswapV3Factory_PoolCreated = {
 		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
 		token0: event.params.token0,
 		token1: event.params.token1,
@@ -269,29 +100,62 @@ VoltageV3Factory.PoolCreated.handler(async ({ event, context }) => {
 		token0: event.params.token0,
 		token1: event.params.token1,
 		address: event.params.pool,
-		factory: "VoltageV3",
+		factory: "UniswapV3",
 	}
 
 	context.Pool.set(pool)
 
-	context.VoltageV3Factory_PoolCreated.set(entity)
-})
+	context.UniswapV3Factory_PoolCreated.set(entity)
+}, handlerConfig)
 
-VoltageV3Factory.SetLmPoolDeployer.handler(async ({ event, context }) => {
-	const entity: VoltageV3Factory_SetLmPoolDeployer = {
+PoolManager.Initialize.handler(async ({ event, context }) => {
+	const entity: UniV4PoolManager_Initialize = {
 		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		lmPoolDeployer: event.params.lmPoolDeployer,
+		poolId: event.params.id,
+		currency0: event.params.currency0,
+		currency1: event.params.currency1,
+		fee: event.params.fee,
+		tickSpacing: event.params.tickSpacing,
+		hooks: event.params.hooks,
+		sqrtPriceX96: event.params.sqrtPriceX96,
+		tick: event.params.tick,
 	}
 
-	context.VoltageV3Factory_SetLmPoolDeployer.set(entity)
-})
-
-VoltageV3Factory.WhiteListAdded.handler(async ({ event, context }) => {
-	const entity: VoltageV3Factory_WhiteListAdded = {
-		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-		user: event.params.user,
-		verified: event.params.verified,
+	const pool: Pool = {
+		id: `${event.chainId}:${event.params.id}`,
+		token0: event.params.currency0,
+		token1: event.params.currency1,
+		address: event.params.id,
+		factory: "UniswapV4_PoolManager",
 	}
 
-	context.VoltageV3Factory_WhiteListAdded.set(entity)
-})
+	context.Pool.set(pool)
+
+	context.UniV4PoolManager_Initialize.set(entity)
+}, handlerConfig)
+
+CLPoolManager.Initialize.handler(async ({ event, context }) => {
+	const entity: CLPoolManager_Initialize = {
+		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+		poolId: event.params.id,
+		currency0: event.params.currency0,
+		currency1: event.params.currency1,
+		hooks: event.params.hooks,
+		fee: event.params.fee,
+		parameters: event.params.parameters,
+		sqrtPriceX96: event.params.sqrtPriceX96,
+		tick: event.params.tick,
+	}
+
+	const pool: Pool = {
+		id: `${event.chainId}:${event.params.id}`,
+		token0: event.params.currency0,
+		token1: event.params.currency1,
+		address: event.params.id,
+		factory: "PancakeSwapInfinity_CLPoolManager",
+	}
+
+	context.Pool.set(pool)
+
+	context.CLPoolManager_Initialize.set(entity)
+}, handlerConfig)
