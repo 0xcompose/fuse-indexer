@@ -9,11 +9,11 @@ import {
 	UniswapV2Factory_PairCreated,
 	UniswapV3Factory,
 	UniswapV3Factory_PoolCreated,
-	Pool,
 	UniV4PoolManager_Initialize,
 	PoolManager,
 	CLPoolManager_Initialize,
 	CLPoolManager,
+	DexProtocol,
 } from "generated"
 
 const handlerConfig = {
@@ -21,6 +21,10 @@ const handlerConfig = {
 }
 
 AlgebraIntegral.CustomPool.handler(async ({ event, context }) => {
+	const poolId = `${event.chainId}:${event.params.pool}`
+	const token0Id = `${event.chainId}:${event.params.token0}`
+	const token1Id = `${event.chainId}:${event.params.token1}`
+
 	const entity: AlgebraIntegral_CustomPool = {
 		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
 		deployer: event.params.deployer,
@@ -29,20 +33,48 @@ AlgebraIntegral.CustomPool.handler(async ({ event, context }) => {
 		pool: event.params.pool,
 	}
 
-	const pool: Pool = {
-		id: `${event.chainId}:${event.params.pool}`,
-		token0: event.params.token0,
-		token1: event.params.token1,
-		address: event.params.pool,
-		factory: "AlgebraIntegral",
-	}
+	context.Token.set({
+		id: token0Id,
+		chainId: event.chainId,
+		address: event.params.token0,
+	})
 
-	context.Pool.set(pool)
+	context.Token.set({
+		id: token1Id,
+		chainId: event.chainId,
+		address: event.params.token1,
+	})
+
+	context.Pool.set({
+		id: poolId,
+		chainId: event.chainId,
+		address: event.params.pool,
+		protocol: "AlgebraIntegral",
+		creatorContract: event.srcAddress,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token0Id}:0`,
+		pool_id: poolId,
+		token_id: token0Id,
+		tokenIndex: 0,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token1Id}:1`,
+		pool_id: poolId,
+		token_id: token1Id,
+		tokenIndex: 1,
+	})
 
 	context.AlgebraIntegral_CustomPool.set(entity)
 }, handlerConfig)
 
 AlgebraIntegral.Pool.handler(async ({ event, context }) => {
+	const poolId = `${event.chainId}:${event.params.pool}`
+	const token0Id = `${event.chainId}:${event.params.token0}`
+	const token1Id = `${event.chainId}:${event.params.token1}`
+
 	const entity: AlgebraIntegral_Pool = {
 		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
 		token0: event.params.token0,
@@ -50,20 +82,48 @@ AlgebraIntegral.Pool.handler(async ({ event, context }) => {
 		pool: event.params.pool,
 	}
 
-	const pool: Pool = {
-		id: `${event.chainId}:${event.params.pool}`,
-		token0: event.params.token0,
-		token1: event.params.token1,
-		address: event.params.pool,
-		factory: "AlgebraIntegral",
-	}
+	context.Token.set({
+		id: token0Id,
+		chainId: event.chainId,
+		address: event.params.token0,
+	})
 
-	context.Pool.set(pool)
+	context.Token.set({
+		id: token1Id,
+		chainId: event.chainId,
+		address: event.params.token1,
+	})
+
+	context.Pool.set({
+		id: poolId,
+		chainId: event.chainId,
+		address: event.params.pool,
+		protocol: "AlgebraIntegral",
+		creatorContract: event.srcAddress,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token0Id}:0`,
+		pool_id: poolId,
+		token_id: token0Id,
+		tokenIndex: 0,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token1Id}:1`,
+		pool_id: poolId,
+		token_id: token1Id,
+		tokenIndex: 1,
+	})
 
 	context.AlgebraIntegral_Pool.set(entity)
 }, handlerConfig)
 
 UniswapV2Factory.PairCreated.handler(async ({ event, context }) => {
+	const poolId = `${event.chainId}:${event.params.pair}`
+	const token0Id = `${event.chainId}:${event.params.token0}`
+	const token1Id = `${event.chainId}:${event.params.token1}`
+
 	const entity: UniswapV2Factory_PairCreated = {
 		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
 		token0: event.params.token0,
@@ -72,20 +132,48 @@ UniswapV2Factory.PairCreated.handler(async ({ event, context }) => {
 		_3: event.params._3,
 	}
 
-	const pool: Pool = {
-		id: `${event.chainId}:${event.params.pair}`,
-		token0: event.params.token0,
-		token1: event.params.token1,
-		address: event.params.pair,
-		factory: "UniswapV2",
-	}
+	context.Token.set({
+		id: token0Id,
+		chainId: event.chainId,
+		address: event.params.token0,
+	})
 
-	context.Pool.set(pool)
+	context.Token.set({
+		id: token1Id,
+		chainId: event.chainId,
+		address: event.params.token1,
+	})
+
+	context.Pool.set({
+		id: poolId,
+		chainId: event.chainId,
+		address: event.params.pair,
+		protocol: "UniswapV2",
+		creatorContract: event.srcAddress,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token0Id}:0`,
+		pool_id: poolId,
+		token_id: token0Id,
+		tokenIndex: 0,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token1Id}:1`,
+		pool_id: poolId,
+		token_id: token1Id,
+		tokenIndex: 1,
+	})
 
 	context.UniswapV2Factory_PairCreated.set(entity)
 }, handlerConfig)
 
 UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
+	const poolId = `${event.chainId}:${event.params.pool}`
+	const token0Id = `${event.chainId}:${event.params.token0}`
+	const token1Id = `${event.chainId}:${event.params.token1}`
+
 	const entity: UniswapV3Factory_PoolCreated = {
 		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
 		token0: event.params.token0,
@@ -95,20 +183,48 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
 		pool: event.params.pool,
 	}
 
-	const pool: Pool = {
-		id: `${event.chainId}:${event.params.pool}`,
-		token0: event.params.token0,
-		token1: event.params.token1,
-		address: event.params.pool,
-		factory: "UniswapV3",
-	}
+	context.Token.set({
+		id: token0Id,
+		chainId: event.chainId,
+		address: event.params.token0,
+	})
 
-	context.Pool.set(pool)
+	context.Token.set({
+		id: token1Id,
+		chainId: event.chainId,
+		address: event.params.token1,
+	})
+
+	context.Pool.set({
+		id: poolId,
+		chainId: event.chainId,
+		address: event.params.pool,
+		protocol: "UniswapV3",
+		creatorContract: event.srcAddress,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token0Id}:0`,
+		pool_id: poolId,
+		token_id: token0Id,
+		tokenIndex: 0,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token1Id}:1`,
+		pool_id: poolId,
+		token_id: token1Id,
+		tokenIndex: 1,
+	})
 
 	context.UniswapV3Factory_PoolCreated.set(entity)
 }, handlerConfig)
 
 PoolManager.Initialize.handler(async ({ event, context }) => {
+	const poolId = `${event.chainId}:${event.params.id}`
+	const token0Id = `${event.chainId}:${event.params.currency0}`
+	const token1Id = `${event.chainId}:${event.params.currency1}`
+
 	const entity: UniV4PoolManager_Initialize = {
 		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
 		poolId: event.params.id,
@@ -121,20 +237,48 @@ PoolManager.Initialize.handler(async ({ event, context }) => {
 		tick: event.params.tick,
 	}
 
-	const pool: Pool = {
-		id: `${event.chainId}:${event.params.id}`,
-		token0: event.params.currency0,
-		token1: event.params.currency1,
-		address: event.params.id,
-		factory: "UniswapV4_PoolManager",
-	}
+	context.Token.set({
+		id: token0Id,
+		chainId: event.chainId,
+		address: event.params.currency0,
+	})
 
-	context.Pool.set(pool)
+	context.Token.set({
+		id: token1Id,
+		chainId: event.chainId,
+		address: event.params.currency1,
+	})
+
+	context.Pool.set({
+		id: poolId,
+		chainId: event.chainId,
+		address: event.params.id,
+		protocol: "UniswapV4",
+		creatorContract: event.srcAddress,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token0Id}:0`,
+		pool_id: poolId,
+		token_id: token0Id,
+		tokenIndex: 0,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token1Id}:1`,
+		pool_id: poolId,
+		token_id: token1Id,
+		tokenIndex: 1,
+	})
 
 	context.UniV4PoolManager_Initialize.set(entity)
 }, handlerConfig)
 
 CLPoolManager.Initialize.handler(async ({ event, context }) => {
+	const poolId = `${event.chainId}:${event.params.id}`
+	const token0Id = `${event.chainId}:${event.params.currency0}`
+	const token1Id = `${event.chainId}:${event.params.currency1}`
+
 	const entity: CLPoolManager_Initialize = {
 		id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
 		poolId: event.params.id,
@@ -147,15 +291,39 @@ CLPoolManager.Initialize.handler(async ({ event, context }) => {
 		tick: event.params.tick,
 	}
 
-	const pool: Pool = {
-		id: `${event.chainId}:${event.params.id}`,
-		token0: event.params.currency0,
-		token1: event.params.currency1,
-		address: event.params.id,
-		factory: "PancakeSwapInfinity_CLPoolManager",
-	}
+	context.Token.set({
+		id: token0Id,
+		chainId: event.chainId,
+		address: event.params.currency0,
+	})
 
-	context.Pool.set(pool)
+	context.Token.set({
+		id: token1Id,
+		chainId: event.chainId,
+		address: event.params.currency1,
+	})
+
+	context.Pool.set({
+		id: poolId,
+		chainId: event.chainId,
+		address: event.params.id,
+		protocol: "PancakeSwapInfinity",
+		creatorContract: event.srcAddress,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token0Id}:0`,
+		pool_id: poolId,
+		token_id: token0Id,
+		tokenIndex: 0,
+	})
+
+	context.PoolToken.set({
+		id: `${poolId}:${token1Id}:1`,
+		pool_id: poolId,
+		token_id: token1Id,
+		tokenIndex: 1,
+	})
 
 	context.CLPoolManager_Initialize.set(entity)
 }, handlerConfig)
