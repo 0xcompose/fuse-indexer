@@ -1,9 +1,34 @@
+enum DexProtocol {
+	UniswapV2
+	UniswapV3
+	UniswapV4
+	PancakeSwapInfinity
+	AlgebraIntegral
+	Curve
+	BalancerV3
+}
+
+type Token {
+	id: ID!
+	chainId: Int! @index
+	address: String! @index
+	poolTokens: [PoolToken!]! @derivedFrom(field: "token")
+}
+
 type Pool {
 	id: ID!
-	token0: String!
-	token1: String!
-	address: String!
-	factory: String!
+	chainId: Int! @index
+	address: String! @index
+	protocol: DexProtocol!
+	creatorContract: String!
+	poolTokens: [PoolToken!]! @derivedFrom(field: "pool")
+}
+
+type PoolToken {
+	id: ID!
+	pool: Pool! @index
+	token: Token! @index
+	tokenIndex: Int!
 }
 
 type AlgebraIntegral_CustomPool {
