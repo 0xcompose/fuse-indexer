@@ -1,35 +1,79 @@
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: envio-indexer
-networks:
-- id: 122
-  rpc: https://rpc.fuse.io
-  start_block: 0
-  contracts:
+unordered_multichain_mode: true
+preload_handlers: true
+
+# Global contract definitions - define once, use everywhere
+contracts:
   - name: UniswapV2Factory
     handler: src/EventHandlers.ts
     events:
-    - event: PairCreated(address indexed token0, address indexed token1, address pair, uint256 )
+      - event: PairCreated(address indexed token0, address indexed token1, address pair, uint256)
+  
   - name: UniswapV3Factory
     abi_file_path: "abi/uniswap-v3-factory.json"
     handler: src/EventHandlers.ts
     events:
-    - event: PoolCreated
+      - event: PoolCreated
+  
   - name: PoolManager # UniswapV4
     abi_file_path: "abi/uni-v4-pool-manager.json"
     handler: src/EventHandlers.ts
     events:
-    - event: Initialize
+      - event: Initialize
+  
   - name: CLPoolManager # PancakeSwapInfinity
     abi_file_path: "abi/pcs-infinity-cl-pool-manager.json"
     handler: src/EventHandlers.ts
     events:
-    - event: Initialize
+      - event: Initialize
+  
   - name: AlgebraIntegral
     abi_file_path: "abi/algebra-integral-factory.json"
     handler: src/EventHandlers.ts
     events:
-    - event: CustomPool
-    - event: Pool
+      - event: CustomPool
+      - event: Pool
+
+# Network-specific configurations
+networks:
+  - id: 122 # Fuse
+    rpc: https://rpc.fuse.io
+    start_block: 0
+    contracts: &all-contracts
+      - name: UniswapV2Factory
+      - name: UniswapV3Factory
+      - name: PoolManager
+      - name: CLPoolManager
+      - name: AlgebraIntegral
+
+  - id: 1514 # Story
+    rpc: https://mainnet.storyrpc.io
+    start_block: 0
+    contracts: *all-contracts
+
+  - id: 43111 # Hemi
+    rpc: https://rpc.hemi.network/rpc
+    start_block: 0
+    contracts: *all-contracts
+
+  - id: 1 # Ethereum Mainnet
+    # rpc: https://eth.llamarpc.com
+    start_block: 0
+    contracts: *all-contracts
+
+  # - id: 8453 # Base
+  #   # rpc: https://base.llamarpc.com
+  #   start_block: 0
+  #   contracts: *all-contracts # Reuse anchor
   
-unordered_multichain_mode: true
-preload_handlers: true
+  # - id: 42161 # Arbitrum
+  #   rpc: https://arb1.arbitrum.io/rpc
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 56
+  #   start_block: 0
+  #   contracts: *all-contracts # Reuse anchor
+  
+
