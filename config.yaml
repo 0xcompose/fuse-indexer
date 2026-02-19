@@ -6,34 +6,40 @@ preload_handlers: true
 # Global contract definitions - define once, use everywhere
 contracts:
   - name: UniswapV2Factory
-    handler: src/EventHandlers.ts
+    handler: src/UniswapLikeProtocolHandlers.ts
     events:
       - event: PairCreated(address indexed token0, address indexed token1, address pair, uint256)
   
   - name: UniswapV3Factory
     abi_file_path: "abi/uniswap-v3-factory.json"
-    handler: src/EventHandlers.ts
+    handler: src/UniswapLikeProtocolHandlers.ts
     events:
       - event: PoolCreated
   
   - name: PoolManager # UniswapV4
     abi_file_path: "abi/uni-v4-pool-manager.json"
-    handler: src/EventHandlers.ts
+    handler: src/UniV4LikeProtocolHandlers.ts
     events:
       - event: Initialize
   
   - name: CLPoolManager # PancakeSwapInfinity
     abi_file_path: "abi/pcs-infinity-cl-pool-manager.json"
-    handler: src/EventHandlers.ts
+    handler: src/UniV4LikeProtocolHandlers.ts
     events:
       - event: Initialize
   
   - name: AlgebraIntegral
     abi_file_path: "abi/algebra-integral-factory.json"
-    handler: src/EventHandlers.ts
+    handler: src/UniswapLikeProtocolHandlers.ts
     events:
       - event: CustomPool
       - event: Pool
+  - name: BalancerV2Vault
+    abi_file_path: "abi/balancer-v2-vault.json"
+    handler: src/BalancerEventHandlers.ts
+    events:
+      - event: PoolRegistered
+
 
 # Network-specific configurations
 networks:

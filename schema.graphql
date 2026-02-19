@@ -5,6 +5,7 @@ enum DexProtocol {
 	PancakeSwapInfinity
 	AlgebraIntegral
 	Curve
+	BalancerV2
 	BalancerV3
 }
 
@@ -85,4 +86,11 @@ type CLPoolManager_Initialize {
 	parameters: String!
 	sqrtPriceX96: BigInt!
 	tick: BigInt!
+}
+
+type BalancerV2Vault_PoolRegistered {
+	id: ID!
+	poolId: String!
+	poolAddress: String!
+	specialization: String!
 }
