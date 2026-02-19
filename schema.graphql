@@ -13,6 +13,7 @@ type Token {
 	id: ID!
 	chainId: Int! @index
 	address: String! @index
+	poolCount: Int!
 	poolTokens: [PoolToken!]! @derivedFrom(field: "token")
 }
 
@@ -93,4 +94,18 @@ type BalancerV2Vault_PoolRegistered {
 	poolId: String!
 	poolAddress: String!
 	specialization: String!
+}
+
+type ChainMetrics {
+	id: ID!
+	chainId: Int! @index
+	totalPools: Int!
+	totalTokens: Int!
+}
+
+type PoolsProtocolDistributionMetrics {
+	id: ID!
+	chainId: Int! @index
+	protocol: DexProtocol!
+	poolCount: Int!
 }

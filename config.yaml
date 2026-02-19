@@ -52,6 +52,7 @@ networks:
       - name: PoolManager
       - name: CLPoolManager
       - name: AlgebraIntegral
+      - name: BalancerV2Vault
 
   - id: 1514 # Story
     rpc: https://mainnet.storyrpc.io
@@ -66,7 +67,15 @@ networks:
   - id: 1 # Ethereum Mainnet
     # rpc: https://eth.llamarpc.com
     start_block: 0
-    contracts: *all-contracts
+    contracts:
+      - name: UniswapV2Factory
+      - name: UniswapV3Factory
+      - name: PoolManager
+      - name: CLPoolManager
+      - name: AlgebraIntegral
+      - name: BalancerV2Vault
+        address:
+          - "0xba12222222228d8ba445958a75a0704d566bf2c8"
 
   # - id: 8453 # Base
   #   # rpc: https://base.llamarpc.com
