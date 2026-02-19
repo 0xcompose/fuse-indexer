@@ -11,8 +11,14 @@ import {
 	UniswapV3Factory_PoolCreated,
 } from "generated"
 import { HandlerContext } from "generated/src/Types"
+import {
+	incrementChainMetricsForPool,
+	incrementChainMetricsTokenCount,
+	setTokenWithPoolCount,
+} from "./metrics"
 import { globalHandlerConfig } from "./handlerConfig"
 import { getEventId } from "./eventId"
+import { getTokenId } from "./tokenId"
 
 type EventWithToken0AndToken1 = {
 	chainId: number
@@ -22,25 +28,39 @@ type EventWithToken0AndToken1 = {
 	}
 }
 
-function addTokens0And1AndPoolTokens(
+async function addTokens0And1AndPoolTokens(
 	poolId: string,
 	event: EventWithToken0AndToken1,
 	context: HandlerContext,
-) {
-	const token0Id = `${event.chainId}:${event.params.token0}`
-	const token1Id = `${event.chainId}:${event.params.token1}`
+	protocol: string,
+): Promise<void> {
+	const token0Id = getTokenId(event.chainId, event.params.token0)
+	const token1Id = getTokenId(event.chainId, event.params.token1)
 
-	context.Token.set({
-		id: token0Id,
-		chainId: event.chainId,
-		address: event.params.token0,
-	})
-
-	context.Token.set({
-		id: token1Id,
-		chainId: event.chainId,
-		address: event.params.token1,
-	})
+	const r0 = await setTokenWithPoolCount(
+		context,
+		token0Id,
+		event.chainId,
+		event.params.token0,
+		1,
+	)
+	const r1 = await setTokenWithPoolCount(
+		context,
+		token1Id,
+		event.chainId,
+		event.params.token1,
+		1,
+	)
+	let newTokenCount = 0
+	if (r0.isNew) newTokenCount++
+	if (r1.isNew) newTokenCount++
+	if (newTokenCount > 0) {
+		await incrementChainMetricsTokenCount(
+			context,
+			event.chainId,
+			newTokenCount,
+		)
+	}
 
 	context.PoolToken.set({
 		id: `${poolId}:${token0Id}:0`,
@@ -55,6 +75,8 @@ function addTokens0And1AndPoolTokens(
 		token_id: token1Id,
 		tokenIndex: 1,
 	})
+
+	await incrementChainMetricsForPool(context, event.chainId, protocol)
 }
 
 AlgebraIntegral.CustomPool.handler(async ({ event, context }) => {
@@ -68,7 +90,7 @@ AlgebraIntegral.CustomPool.handler(async ({ event, context }) => {
 		pool: event.params.pool,
 	}
 
-	addTokens0And1AndPoolTokens(poolId, event, context)
+	await addTokens0And1AndPoolTokens(poolId, event, context, "AlgebraIntegral")
 
 	context.Pool.set({
 		id: poolId,
@@ -91,7 +113,7 @@ AlgebraIntegral.Pool.handler(async ({ event, context }) => {
 		pool: event.params.pool,
 	}
 
-	addTokens0And1AndPoolTokens(poolId, event, context)
+	await addTokens0And1AndPoolTokens(poolId, event, context, "AlgebraIntegral")
 
 	context.Pool.set({
 		id: poolId,
@@ -115,7 +137,7 @@ UniswapV2Factory.PairCreated.handler(async ({ event, context }) => {
 		_3: event.params._3,
 	}
 
-	addTokens0And1AndPoolTokens(poolId, event, context)
+	await addTokens0And1AndPoolTokens(poolId, event, context, "UniswapV2")
 
 	context.Pool.set({
 		id: poolId,
@@ -140,7 +162,7 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
 		pool: event.params.pool,
 	}
 
-	addTokens0And1AndPoolTokens(poolId, event, context)
+	await addTokens0And1AndPoolTokens(poolId, event, context, "UniswapV3")
 
 	context.Pool.set({
 		id: poolId,

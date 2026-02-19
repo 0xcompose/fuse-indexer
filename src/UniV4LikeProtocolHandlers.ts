@@ -6,11 +6,16 @@ import {
 	PoolManager,
 	CLPoolManager_Initialize,
 	CLPoolManager,
-	BalancerV2Vault,
 } from "generated"
 import { HandlerContext } from "generated/src/Types"
+import {
+	incrementChainMetricsForPool,
+	incrementChainMetricsTokenCount,
+	setTokenWithPoolCount,
+} from "./metrics"
 import { globalHandlerConfig } from "./handlerConfig"
 import { getEventId } from "./eventId"
+import { getTokenId } from "./tokenId"
 
 type EventWithCurrency0AndCurrency1 = {
 	chainId: number
@@ -20,25 +25,42 @@ type EventWithCurrency0AndCurrency1 = {
 	}
 }
 
-function addCurrencies0And1AndPoolTokens(
+async function addCurrencies0And1AndPoolTokens(
 	poolId: string,
 	event: EventWithCurrency0AndCurrency1,
 	context: HandlerContext,
-) {
-	const token0Id = `${event.chainId}:${event.params.currency0}`
-	const token1Id = `${event.chainId}:${event.params.currency1}`
+	protocol: string,
+): Promise<void> {
+	const token0Id = getTokenId(event.chainId, event.params.currency0)
+	const token1Id = getTokenId(event.chainId, event.params.currency1)
 
-	context.Token.set({
-		id: token0Id,
-		chainId: event.chainId,
-		address: event.params.currency0,
-	})
+	const r0 = await setTokenWithPoolCount(
+		context,
+		token0Id,
+		event.chainId,
+		event.params.currency0,
+		1,
+	)
+	const r1 = await setTokenWithPoolCount(
+		context,
+		token1Id,
+		event.chainId,
+		event.params.currency1,
+		1,
+	)
 
-	context.Token.set({
-		id: token1Id,
-		chainId: event.chainId,
-		address: event.params.currency1,
-	})
+	let newTokenCount = 0
+
+	if (r0.isNew) newTokenCount++
+	if (r1.isNew) newTokenCount++
+
+	if (newTokenCount > 0) {
+		await incrementChainMetricsTokenCount(
+			context,
+			event.chainId,
+			newTokenCount,
+		)
+	}
 
 	context.PoolToken.set({
 		id: `${poolId}:${token0Id}:0`,
@@ -53,6 +75,8 @@ function addCurrencies0And1AndPoolTokens(
 		token_id: token1Id,
 		tokenIndex: 1,
 	})
+
+	await incrementChainMetricsForPool(context, event.chainId, protocol)
 }
 
 PoolManager.Initialize.handler(async ({ event, context }) => {
@@ -78,7 +102,7 @@ PoolManager.Initialize.handler(async ({ event, context }) => {
 		creatorContract: event.srcAddress,
 	})
 
-	addCurrencies0And1AndPoolTokens(poolId, event, context)
+	await addCurrencies0And1AndPoolTokens(poolId, event, context, "UniswapV4")
 
 	context.UniV4PoolManager_Initialize.set(entity)
 }, globalHandlerConfig)
@@ -98,7 +122,12 @@ CLPoolManager.Initialize.handler(async ({ event, context }) => {
 		tick: event.params.tick,
 	}
 
-	addCurrencies0And1AndPoolTokens(poolId, event, context)
+	await addCurrencies0And1AndPoolTokens(
+		poolId,
+		event,
+		context,
+		"PancakeSwapInfinity",
+	)
 
 	context.Pool.set({
 		id: poolId,

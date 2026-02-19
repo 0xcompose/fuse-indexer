@@ -1,9 +1,12 @@
 import { BalancerV2Vault } from "generated"
+import { incrementChainMetricsForPool } from "./metrics"
 import { getEventId } from "./eventId"
 import { globalHandlerConfig } from "./handlerConfig"
 
 BalancerV2Vault.PoolRegistered.handler(async ({ event, context }) => {
 	const poolId = `${event.chainId}:${event.params.poolId}`
+
+	await incrementChainMetricsForPool(context, event.chainId, "BalancerV2")
 
 	context.Pool.set({
 		id: poolId,
