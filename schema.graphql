@@ -7,6 +7,8 @@ enum DexProtocol {
 	Curve
 	BalancerV2
 	BalancerV3
+	VelodromeSlipstreamCL
+	VelodromeCPMM
 }
 
 type Token {
@@ -24,6 +26,8 @@ type Pool {
 	protocol: DexProtocol!
 	creatorContract: String!
 	poolTokens: [PoolToken!]! @derivedFrom(field: "pool")
+	createdAt: Int!
+	createdAtBlock: Int!
 }
 
 type PoolToken {
@@ -63,6 +67,23 @@ type UniswapV3Factory_PoolCreated {
 	fee: BigInt!
 	tickSpacing: BigInt!
 	pool: String!
+}
+
+type VelodromeSlipstreamCLFactory_PoolCreated {
+	id: ID!
+	token0: String!
+	token1: String!
+	tickSpacing: BigInt!
+	pool: String!
+}
+
+type VelodromeCPMMFactory_PoolCreated {
+	id: ID!
+	token0: String!
+	token1: String!
+	stable: Boolean!
+	pool: String!
+	_4: BigInt!
 }
 
 type UniV4PoolManager_Initialize {

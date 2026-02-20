@@ -19,6 +19,8 @@ BalancerV2Vault.PoolRegistered.handler(async ({ event, context }) => {
 		address: event.params.poolAddress,
 		protocol: "BalancerV2",
 		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
 	})
 
 	context.BalancerV2Vault_PoolRegistered.set({
@@ -40,6 +42,8 @@ BalancerV3Vault.PoolRegistered.handler(async ({ event, context }) => {
 		address: event.params.pool,
 		protocol: "BalancerV3",
 		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
 	})
 
 	const tokenConfigs = event.params.tokenConfig

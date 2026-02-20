@@ -100,6 +100,8 @@ PoolManager.Initialize.handler(async ({ event, context }) => {
 		address: event.params.id,
 		protocol: "UniswapV4",
 		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
 	})
 
 	await addCurrencies0And1AndPoolTokens(poolId, event, context, "UniswapV4")
@@ -135,6 +137,8 @@ CLPoolManager.Initialize.handler(async ({ event, context }) => {
 		address: event.params.id,
 		protocol: "PancakeSwapInfinity",
 		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
 	})
 
 	context.CLPoolManager_Initialize.set(entity)

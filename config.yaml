@@ -34,6 +34,7 @@ contracts:
     events:
       - event: CustomPool
       - event: Pool
+
   - name: BalancerV2Vault
     abi_file_path: "abi/balancer-v2-vault.json"
     handler: src/BalancerEventHandlers.ts
@@ -45,6 +46,16 @@ contracts:
     handler: src/BalancerEventHandlers.ts
     events:
       - event: PoolRegistered
+    
+  - name: VelodromeSlipstreamCLFactory
+    handler: src/UniswapLikeProtocolHandlers.ts
+    events:
+      - event: PoolCreated(address indexed token0, address indexed token1, int24 indexed tickSpacing, address pool)
+
+  - name: VelodromeCPMMFactory
+    handler: src/UniswapLikeProtocolHandlers.ts
+    events:
+      - event: PoolCreated(address indexed token0, address indexed token1, bool indexed stable, address pool, uint256)
 
 # Network-specific configurations
 networks:
@@ -59,6 +70,12 @@ networks:
       - name: AlgebraIntegral
       - name: BalancerV2Vault
       - name: BalancerV3Vault
+      - name: VelodromeSlipstreamCLFactory
+      - name: VelodromeCPMMFactory
+
+  - id: 10 # Optimism
+    start_block: 0
+    contracts: *all-contracts
 
   - id: 1514 # Story
     rpc: https://mainnet.storyrpc.io

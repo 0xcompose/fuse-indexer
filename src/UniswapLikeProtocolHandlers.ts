@@ -9,6 +9,8 @@ import {
 	UniswapV2Factory_PairCreated,
 	UniswapV3Factory,
 	UniswapV3Factory_PoolCreated,
+	VelodromeSlipstreamCLFactory,
+	VelodromeCPMMFactory,
 } from "generated"
 import { HandlerContext } from "generated/src/Types"
 import {
@@ -98,6 +100,8 @@ AlgebraIntegral.CustomPool.handler(async ({ event, context }) => {
 		address: event.params.pool,
 		protocol: "AlgebraIntegral",
 		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
 	})
 
 	context.AlgebraIntegral_CustomPool.set(entity)
@@ -121,6 +125,8 @@ AlgebraIntegral.Pool.handler(async ({ event, context }) => {
 		address: event.params.pool,
 		protocol: "AlgebraIntegral",
 		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
 	})
 
 	context.AlgebraIntegral_Pool.set(entity)
@@ -145,6 +151,8 @@ UniswapV2Factory.PairCreated.handler(async ({ event, context }) => {
 		address: event.params.pair,
 		protocol: "UniswapV2",
 		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
 	})
 
 	context.UniswapV2Factory_PairCreated.set(entity)
@@ -170,7 +178,63 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
 		address: event.params.pool,
 		protocol: "UniswapV3",
 		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
 	})
 
 	context.UniswapV3Factory_PoolCreated.set(entity)
+}, globalHandlerConfig)
+
+VelodromeSlipstreamCLFactory.PoolCreated.handler(async ({ event, context }) => {
+	const poolId = `${event.chainId}:${event.params.pool}`
+
+	await addTokens0And1AndPoolTokens(
+		poolId,
+		event,
+		context,
+		"VelodromeSlipstreamCL",
+	)
+
+	context.Pool.set({
+		id: poolId,
+		chainId: event.chainId,
+		address: event.params.pool,
+		protocol: "VelodromeSlipstreamCL",
+		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
+	})
+
+	context.VelodromeSlipstreamCLFactory_PoolCreated.set({
+		id: getEventId(event),
+		token0: event.params.token0,
+		token1: event.params.token1,
+		tickSpacing: event.params.tickSpacing,
+		pool: event.params.pool,
+	})
+}, globalHandlerConfig)
+
+VelodromeCPMMFactory.PoolCreated.handler(async ({ event, context }) => {
+	const poolId = `${event.chainId}:${event.params.pool}`
+
+	await addTokens0And1AndPoolTokens(poolId, event, context, "VelodromeCPMM")
+
+	context.Pool.set({
+		id: poolId,
+		chainId: event.chainId,
+		address: event.params.pool,
+		protocol: "VelodromeCPMM",
+		creatorContract: event.srcAddress,
+		createdAt: event.block.timestamp,
+		createdAtBlock: event.block.number,
+	})
+
+	context.VelodromeCPMMFactory_PoolCreated.set({
+		id: getEventId(event),
+		token0: event.params.token0,
+		token1: event.params.token1,
+		stable: event.params.stable,
+		pool: event.params.pool,
+		_4: event.params._4,
+	})
 }, globalHandlerConfig)
