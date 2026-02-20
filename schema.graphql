@@ -96,6 +96,13 @@ type BalancerV2Vault_PoolRegistered {
 	specialization: String!
 }
 
+type BalancerV3Vault_PoolRegistered {
+	id: ID!
+	pool_id: String!
+	factory: String!
+	swapFeePercentage: BigInt!
+}
+
 type ChainMetrics {
 	id: ID!
 	chainId: Int! @index

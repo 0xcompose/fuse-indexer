@@ -40,6 +40,11 @@ contracts:
     events:
       - event: PoolRegistered
 
+  - name: BalancerV3Vault
+    abi_file_path: "abi/balancer-v3-vault.json"
+    handler: src/BalancerEventHandlers.ts
+    events:
+      - event: PoolRegistered
 
 # Network-specific configurations
 networks:
@@ -53,6 +58,7 @@ networks:
       - name: CLPoolManager
       - name: AlgebraIntegral
       - name: BalancerV2Vault
+      - name: BalancerV3Vault
 
   - id: 1514 # Story
     rpc: https://mainnet.storyrpc.io
@@ -76,6 +82,7 @@ networks:
       - name: BalancerV2Vault
         address:
           - "0xba12222222228d8ba445958a75a0704d566bf2c8"
+      - name: BalancerV3Vault
 
   # - id: 8453 # Base
   #   # rpc: https://base.llamarpc.com
