@@ -8,7 +8,16 @@ contracts:
   - name: UniswapV2Factory
     handler: src/UniswapLikeProtocolHandlers.ts
     events:
-      - event: PairCreated(address indexed token0, address indexed token1, address pair, uint256)
+      - event: PairCreated(address indexed token0, address indexed token1, address pair, uint256 pairNumber)
+
+  - name: UniswapV2Pair
+    abi_file_path: "abi/uniswap-v2-pool.json"
+    handler: src/UniswapV2PoolHandlers.ts
+    events:
+      - event: Swap
+      - event: Mint
+      - event: Burn
+      - event: Sync
   
   - name: UniswapV3Factory
     abi_file_path: "abi/uniswap-v3-factory.json"
@@ -61,9 +70,10 @@ contracts:
 networks:
   - id: 122 # Fuse
     rpc: https://rpc.fuse.io
-    start_block: 0
+    start_block: 7290000 # No pools found before this block
     contracts: &all-contracts
       - name: UniswapV2Factory
+      - name: UniswapV2Pair
       - name: UniswapV3Factory
       - name: PoolManager
       - name: CLPoolManager
@@ -73,33 +83,113 @@ networks:
       - name: VelodromeSlipstreamCLFactory
       - name: VelodromeCPMMFactory
 
-  - id: 10 # Optimism
-    start_block: 0
-    contracts: *all-contracts
+  # - id: 1 # Ethereum Mainnet
+  #   start_block: 0
+  #   contracts:
+  #     - name: UniswapV2Factory
+  #     - name: UniswapV3Factory
+  #     - name: PoolManager
+  #     - name: CLPoolManager
+  #     - name: AlgebraIntegral
+  #     - name: BalancerV2Vault
+  #       address:
+  #         - "0xba12222222228d8ba445958a75a0704d566bf2c8"
+  #     - name: BalancerV3Vault
+  
+  # - id: 10 # Optimism
+  #   start_block: 0
+  #   contracts: *all-contracts
 
-  - id: 1514 # Story
-    rpc: https://mainnet.storyrpc.io
-    start_block: 0
-    contracts: *all-contracts
+  # - id: 1514 # Story
+  #   rpc: https://mainnet.storyrpc.io
+  #   start_block: 0
+  #   contracts: *all-contracts
 
-  - id: 43111 # Hemi
-    rpc: https://rpc.hemi.network/rpc
-    start_block: 0
-    contracts: *all-contracts
+  # - id: 43111 # Hemi
+  #   rpc: https://rpc.hemi.network/rpc
+  #   start_block: 0
+  #   contracts: *all-contracts
 
-  - id: 1 # Ethereum Mainnet
-    # rpc: https://eth.llamarpc.com
-    start_block: 0
-    contracts:
-      - name: UniswapV2Factory
-      - name: UniswapV3Factory
-      - name: PoolManager
-      - name: CLPoolManager
-      - name: AlgebraIntegral
-      - name: BalancerV2Vault
-        address:
-          - "0xba12222222228d8ba445958a75a0704d566bf2c8"
-      - name: BalancerV3Vault
+  # - id: 151
+  #   rpc: https://governors.mainnet.redbelly.network
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 61564
+  #   rpc: https://rpc.pine.ink
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 3282
+  #   rpc: https://mainnet-beta-rpc.irys.xyz/v1/execution-rpc
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 12216
+  #   rpc: https://rpc.l2protocol.com
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 4114
+  #   rpc: https://rpc.mainnet.citrea.xyz
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 1672
+  #   rpc: https://rpc.pharos.xyz
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 1000001
+  #   rpc: https://rpc.webchain.e-talk.xyz
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 179170
+  #   rpc: https://rpc-api.transparency.solutions
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 737373
+  #   rpc: https://subnets.avax.network/cx/mainnet/rpc
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 1643
+  #   rpc: https://rpc.xgr.network
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 432
+  #   rpc: https://rpc.nutriemp-chain.link
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 2366
+  #   rpc: https://rpc.gokite.ai
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 88888
+  #   rpc: https://rpc.ankr.com/chiliz
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 2288
+  #   rpc: https://rpc.mocachain.org
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  
+  # - id: 1783
+  #   rpc: https://json-rpc.kiivalidator.com
+  #   start_block: 0
+  #   contracts: *all-contracts
+
+  # - id: 4337
+  #   rpc: https://build.onbeam.com/rpc
+  #   start_block: 0
+  #   contracts: *all-contracts
 
   # - id: 8453 # Base
   #   # rpc: https://base.llamarpc.com

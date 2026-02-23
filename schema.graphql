@@ -57,7 +57,59 @@ type UniswapV2Factory_PairCreated {
 	token0: String!
 	token1: String!
 	pair: String!
-	_3: BigInt!
+	pairNumber: BigInt!
+}
+
+type UniswapV2Pool_Swap {
+	id: ID!
+	pool: String! @index
+	sender: String!
+	amount0In: BigInt!
+	amount1In: BigInt!
+	amount0Out: BigInt!
+	amount1Out: BigInt!
+	to: String!
+	createdAt: Int!
+	createdAtBlock: Int!
+}
+
+type UniswapV2Pool_Mint {
+	id: ID!
+	pool: String! @index
+	sender: String!
+	amount0: BigInt!
+	amount1: BigInt!
+	createdAt: Int!
+	createdAtBlock: Int!
+}
+
+type UniswapV2Pool_Burn {
+	id: ID!
+	pool: String! @index
+	sender: String!
+	amount0: BigInt!
+	amount1: BigInt!
+	to: String!
+	createdAt: Int!
+	createdAtBlock: Int!
+}
+
+type UniswapV2Pool_Sync {
+	id: ID!
+	pool: String! @index
+	reserve0: BigInt!
+	reserve1: BigInt!
+	createdAt: Int!
+	createdAtBlock: Int!
+}
+
+type PoolLatestReserves {
+	id: ID!
+	pool: String! @index
+	reserve0: BigInt!
+	reserve1: BigInt!
+	updatedAt: Int!
+	updatedAtBlock: Int!
 }
 
 type UniswapV3Factory_PoolCreated {

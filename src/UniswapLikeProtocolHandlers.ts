@@ -6,11 +6,11 @@ import {
 	AlgebraIntegral_CustomPool,
 	AlgebraIntegral_Pool,
 	UniswapV2Factory,
-	UniswapV2Factory_PairCreated,
 	UniswapV3Factory,
 	UniswapV3Factory_PoolCreated,
 	VelodromeSlipstreamCLFactory,
 	VelodromeCPMMFactory,
+	UniswapV2Factory_PairCreated,
 } from "generated"
 import { HandlerContext } from "generated/src/Types"
 import {
@@ -21,6 +21,7 @@ import {
 import { globalHandlerConfig } from "./handlerConfig"
 import { getEventId } from "./eventId"
 import { getTokenId } from "./tokenId"
+import { ADDRESS_ZERO } from "./utils"
 
 type EventWithToken0AndToken1 = {
 	chainId: number
@@ -132,6 +133,23 @@ AlgebraIntegral.Pool.handler(async ({ event, context }) => {
 	context.AlgebraIntegral_Pool.set(entity)
 }, globalHandlerConfig)
 
+UniswapV2Factory.PairCreated.contractRegister(({ event, context }) => {
+	if (event.params.pair === ADDRESS_ZERO) {
+		context.log.warn("Zero address pair created at tx hash", {
+			event: event.params,
+			source: event.srcAddress,
+			transaction: event.transaction,
+		})
+		return
+	}
+
+	context.addUniswapV2Pair(event.params.pair)
+
+	context.log.info("UniswapV2Factory.PairCreated.contractRegister", {
+		pair: event.params.pair,
+	})
+}, globalHandlerConfig)
+
 UniswapV2Factory.PairCreated.handler(async ({ event, context }) => {
 	const poolId = `${event.chainId}:${event.params.pair}`
 
@@ -140,7 +158,7 @@ UniswapV2Factory.PairCreated.handler(async ({ event, context }) => {
 		token0: event.params.token0,
 		token1: event.params.token1,
 		pair: event.params.pair,
-		_3: event.params._3,
+		pairNumber: event.params.pairNumber,
 	}
 
 	await addTokens0And1AndPoolTokens(poolId, event, context, "UniswapV2")
