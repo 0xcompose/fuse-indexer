@@ -309,34 +309,14 @@ networks:
       url: https://evm.kava.io
     start_block: 0
     contracts: *all-contracts
-  - id: 1
-    rpc_config:
-      url: https://eth.llamarpc.com
-    start_block: 0
-    contracts: *all-contracts
-  - id: 999
-    rpc_config:
-      url: https://rpc.hyperliquid.xyz/evm
-    start_block: 0
-    contracts: *all-contracts
   - id: 143
     rpc_config:
       url: https://monad-mainnet.api.onfinality.io/public
     start_block: 0
     contracts: *all-contracts
-  - id: 1
-    rpc_config:
-      url: https://eth.llamarpc.com
-    start_block: 0
-    contracts: *all-contracts
   - id: 4114
     rpc_config:
       url: https://rpc.mainnet.citrea.xyz
-    start_block: 0
-    contracts: *all-contracts
-  - id: 1
-    rpc_config:
-      url: https://eth.llamarpc.com
     start_block: 0
     contracts: *all-contracts
   - id: 999
@@ -367,16 +347,6 @@ networks:
   - id: 60808
     rpc_config:
       url: https://rpc.gobob.xyz
-    start_block: 0
-    contracts: *all-contracts
-  - id: 1
-    rpc_config:
-      url: https://eth.llamarpc.com
-    start_block: 0
-    contracts: *all-contracts
-  - id: 1
-    rpc_config:
-      url: https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7
     start_block: 0
     contracts: *all-contracts
   - id: 480

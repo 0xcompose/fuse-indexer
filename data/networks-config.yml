@@ -185,22 +185,10 @@ networks:
   - id: 2222
     start_block: 0
     contracts: *all-contracts
-  - id: 1
-    start_block: 0
-    contracts: *all-contracts
-  - id: 999
-    start_block: 0
-    contracts: *all-contracts
   - id: 143
     start_block: 0
     contracts: *all-contracts
-  - id: 1
-    start_block: 0
-    contracts: *all-contracts
   - id: 4114
-    start_block: 0
-    contracts: *all-contracts
-  - id: 1
     start_block: 0
     contracts: *all-contracts
   - id: 999
@@ -219,12 +207,6 @@ networks:
     start_block: 0
     contracts: *all-contracts
   - id: 60808
-    start_block: 0
-    contracts: *all-contracts
-  - id: 1
-    start_block: 0
-    contracts: *all-contracts
-  - id: 1
     start_block: 0
     contracts: *all-contracts
   - id: 480

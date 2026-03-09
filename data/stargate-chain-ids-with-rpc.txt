@@ -60,21 +60,15 @@
 55244 https://rpc.superposition.so
 167000 https://rpc.taiko.xyz
 2222 https://evm.kava.io
-1 https://eth.llamarpc.com
 999 https://rpc.hyperliquid.xyz/evm
 143 https://monad-mainnet.api.onfinality.io/public
-1 https://eth.llamarpc.com
 4114 https://rpc.mainnet.citrea.xyz
-1 https://eth.llamarpc.com
-999 https://rpc.hyperliquid.xyz/evm
 250 https://fantom-public.nodies.app
 42220 https://forno.celo.org
 728126428 https://tron.api.pocket.network
 No active RPC found for -239
 239 https://rpc.ankr.com/tac
 60808 https://rpc.gobob.xyz
-1 https://eth.llamarpc.com
-1 https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7
 480 https://worldchain-mainnet.g.alchemy.com/public
 747474 https://katana.drpc.org
 4326 https://rpc-megaeth-mainnet.globalstake.io
