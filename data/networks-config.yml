@@ -1,0 +1,316 @@
+networks:
+  - id: 1
+    start_block: 0
+    contracts: *all-contracts
+  - id: 42161
+    start_block: 0
+    contracts: *all-contracts
+  - id: 8453
+    start_block: 0
+    contracts: *all-contracts
+  - id: 988
+    start_block: 0
+    contracts: *all-contracts
+  - id: 2741
+    start_block: 0
+    contracts: *all-contracts
+  - id: 33139
+    start_block: 0
+    contracts: *all-contracts
+  - id: 80094
+    start_block: 0
+    contracts: *all-contracts
+  - id: 3637
+    start_block: 0
+    contracts: *all-contracts
+  - id: 484
+    start_block: 0
+    contracts: *all-contracts
+  - id: 25
+    start_block: 0
+    contracts: *all-contracts
+  - id: 666666666
+    start_block: 0
+    contracts: *all-contracts
+  - id: 97477
+    start_block: 0
+    contracts: *all-contracts
+  - id: 14
+    start_block: 0
+    contracts: *all-contracts
+  - id: 747
+    start_block: 0
+    contracts: *all-contracts
+  - id: 122
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1300
+    start_block: 0
+    contracts: *all-contracts
+  - id: 100
+    start_block: 0
+    contracts: *all-contracts
+  - id: 2345
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1625
+    start_block: 0
+    contracts: *all-contracts
+  - id: 295
+    start_block: 0
+    contracts: *all-contracts
+  - id: 43111
+    start_block: 0
+    contracts: *all-contracts
+  - id: 8822
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1480
+    start_block: 0
+    contracts: *all-contracts
+  - id: 8217
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1890
+    start_block: 0
+    contracts: *all-contracts
+  - id: 169
+    start_block: 0
+    contracts: *all-contracts
+  - id: 5000
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1088
+    start_block: 0
+    contracts: *all-contracts
+  - id: 6900
+    start_block: 0
+    contracts: *all-contracts
+  - id: 16661
+    start_block: 0
+    contracts: *all-contracts
+  - id: 10088
+    start_block: 0
+    contracts: *all-contracts
+  - id: 10
+    start_block: 0
+    contracts: *all-contracts
+  - id: 3338
+    start_block: 0
+    contracts: *all-contracts
+  - id: 9745
+    start_block: 0
+    contracts: *all-contracts
+  - id: 98866
+    start_block: 0
+    contracts: *all-contracts
+  - id: 151
+    start_block: 0
+    contracts: *all-contracts
+  - id: 30
+    start_block: 0
+    contracts: *all-contracts
+  - id: 534352
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1329
+    start_block: 0
+    contracts: *all-contracts
+  - id: 5031
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1868
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1514
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1923
+    start_block: 0
+    contracts: *all-contracts
+  - id: 40
+    start_block: 0
+    contracts: *all-contracts
+  - id: 130
+    start_block: 0
+    contracts: *all-contracts
+  - id: 50
+    start_block: 0
+    contracts: *all-contracts
+  - id: 59144
+    start_block: 0
+    contracts: *all-contracts
+  - id: 9069
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1313161554
+    start_block: 0
+    contracts: *all-contracts
+  - id: 43114
+    start_block: 0
+    contracts: *all-contracts
+  - id: 56
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1116
+    start_block: 0
+    contracts: *all-contracts
+  - id: 41923
+    start_block: 0
+    contracts: *all-contracts
+  - id: 26514
+    start_block: 0
+    contracts: *all-contracts
+  - id: 57073
+    start_block: 0
+    contracts: *all-contracts
+  - id: 291
+    start_block: 0
+    contracts: *all-contracts
+  - id: 137
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1380012617
+    start_block: 0
+    contracts: *all-contracts
+  - id: 146
+    start_block: 0
+    contracts: *all-contracts
+  - id: 55244
+    start_block: 0
+    contracts: *all-contracts
+  - id: 167000
+    start_block: 0
+    contracts: *all-contracts
+  - id: 2222
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1
+    start_block: 0
+    contracts: *all-contracts
+  - id: 999
+    start_block: 0
+    contracts: *all-contracts
+  - id: 143
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1
+    start_block: 0
+    contracts: *all-contracts
+  - id: 4114
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1
+    start_block: 0
+    contracts: *all-contracts
+  - id: 999
+    start_block: 0
+    contracts: *all-contracts
+  - id: 250
+    start_block: 0
+    contracts: *all-contracts
+  - id: 42220
+    start_block: 0
+    contracts: *all-contracts
+  - id: 728126428
+    start_block: 0
+    contracts: *all-contracts
+  - id: 239
+    start_block: 0
+    contracts: *all-contracts
+  - id: 60808
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1
+    start_block: 0
+    contracts: *all-contracts
+  - id: 480
+    start_block: 0
+    contracts: *all-contracts
+  - id: 747474
+    start_block: 0
+    contracts: *all-contracts
+  - id: 4326
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1101
+    start_block: 0
+    contracts: *all-contracts
+  - id: 324
+    start_block: 0
+    contracts: *all-contracts
+  - id: 204
+    start_block: 0
+    contracts: *all-contracts
+  - id: 48900
+    start_block: 0
+    contracts: *all-contracts
+  - id: 2818
+    start_block: 0
+    contracts: *all-contracts
+  - id: 42793
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1284
+    start_block: 0
+    contracts: *all-contracts
+  - id: 21000000
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1285
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1996
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1030
+    start_block: 0
+    contracts: *all-contracts
+  - id: 34443
+    start_block: 0
+    contracts: *all-contracts
+  - id: 81457
+    start_block: 0
+    contracts: *all-contracts
+  - id: 196
+    start_block: 0
+    contracts: *all-contracts
+  - id: 592
+    start_block: 0
+    contracts: *all-contracts
+  - id: 252
+    start_block: 0
+    contracts: *all-contracts
+  - id: 5064014
+    start_block: 0
+    contracts: *all-contracts
+  - id: 7560
+    start_block: 0
+    contracts: *all-contracts
+  - id: 50104
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1135
+    start_block: 0
+    contracts: *all-contracts
+  - id: 81224
+    start_block: 0
+    contracts: *all-contracts
+  - id: 4337
+    start_block: 0
+    contracts: *all-contracts
+  - id: 7777777
+    start_block: 0
+    contracts: *all-contracts
+  - id: 37
+    start_block: 0
+    contracts: *all-contracts
+  - id: 88
+    start_block: 0
+    contracts: *all-contracts
+  - id: 1408
+    start_block: 0
+    contracts: *all-contracts
